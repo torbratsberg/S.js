@@ -1,4 +1,4 @@
-// Testing block
+// Testing divs
 let element = document.querySelector("body");
 let foo = document.createElement("div");
 foo.setAttribute("class", "box");
@@ -11,11 +11,11 @@ element.appendChild(bar);
 
 /**
 * The S class
-* @constructor Selector
+* @param selector
 */
 class S {
     /**
-    * All matches from selector is stored in this variable
+    * All matches from selector is stored in this property
     */
     items: NodeListOf<Element>;
 
