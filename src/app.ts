@@ -8,6 +8,12 @@ let bar = document.createElement("div");
 bar.setAttribute("class", "box");
 bar.setAttribute("style", "background: blue; height: 100px; width: 10px; display: inline-block;");
 element.appendChild(bar);
+let foobar = document.createElement("p");
+foobar.setAttribute("class", "text");
+foobar.setAttribute("style", "display: block;");
+let text = document.createTextNode('My text');
+foobar.appendChild(text);
+element.appendChild(foobar);
 
 /**
 * The S class
@@ -36,7 +42,6 @@ class S {
         for (const item of this.items as any) {
             item.style.width = widest + 'px';
         }
-        return;
     }
 
     /**
@@ -66,7 +71,7 @@ class S {
     }
 
     /**
-    * Styles element
+    * Animates element
     * @param property The CSS property to set
     * @param value The value to assign to the property
     * @param duration The value to assign to the property
@@ -76,6 +81,78 @@ class S {
     animate(property: string, value: string, duration: string) {
         this.css('transitionDuration', duration + 'ms');
         this.css(property, value);
+    }
+
+    /**
+    * Changes text of elements
+    * @param Text The text to give selected element
+    */
+    text(newText: string): string | undefined {
+        if(newText) {
+            this.items[0].innerHTML = newText;
+        } else {
+            return this.items[0].innerHTML;
+        }
+    }
+
+    /**
+    * Adds event listener
+    * @param event Which event to fire on
+    * @param callback Function to run when event is fired
+    */
+    on(event: string, callback: any) {
+        for (const item of this.items as any) {
+            item.addEventListener(event, callback);
+        }
+    }
+
+    /**
+    * Adds class to element
+    * @param className Name of class to add
+    */
+    addClass(className: string) {
+        for (const item of this.items as any) {
+            item.classList.add(className);
+        }
+    }
+
+    /**
+    * Removes class to element
+    * @param className Name of class to add
+    */
+    removeClass(className: string) {
+        for (const item of this.items as any) {
+            item.classList.remove(className);
+        }
+    }
+
+    /**
+    * Toggles class
+    * @param className Name of class to toggle
+    */
+    toggleClass(className: string) {
+        for (const item of this.items as any) {
+            if(item.classList.contains(className)) {
+                item.classList.remove(className);
+            } else {
+                item.classList.add(className);
+            }
+        }
+    }
+
+    /**
+    * Get or set attributes
+    * @param attributeName Name of the attribute
+    * @param value OPTIONAL Value to give attributeName
+    */
+    attr(attributeName: string, value?: string) {
+        for (const item of this.items as any) {
+            if(value) {
+                item.attributes[attributeName].nodeValue += ' ' + value;
+            } else {
+                return item.attributes[attributeName];
+            }
+        }
     }
 }
 
