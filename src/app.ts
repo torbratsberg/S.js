@@ -1,20 +1,3 @@
-// Testing divs
-let element = document.querySelector("body");
-let foo = document.createElement("div");
-foo.setAttribute("class", "box");
-foo.setAttribute("style", "background: red; height: 10px; width: 100px; display: inline-block;");
-element.appendChild(foo);
-let bar = document.createElement("div");
-bar.setAttribute("class", "box");
-bar.setAttribute("style", "background: blue; height: 100px; width: 10px; display: inline-block;");
-element.appendChild(bar);
-let foobar = document.createElement("p");
-foobar.setAttribute("class", "text");
-foobar.setAttribute("style", "display: block;");
-let text = document.createTextNode('My text');
-foobar.appendChild(text);
-element.appendChild(foobar);
-
 /**
 * The S class
 * @param selector
@@ -25,14 +8,16 @@ class S {
     */
     items: NodeListOf<Element>;
 
+
     constructor(selector: string) {
         this.items = document.querySelectorAll(selector);
     }
 
     /**
     * Sets the width off all elements to be the same as the widest one.
+    * @returns void
     */
-    widthEqualize() {
+    widthEqualize(): void {
         let widest = 0;
         for (const item of this.items as any) {
             if (item.offsetWidth > widest) {
@@ -46,8 +31,9 @@ class S {
 
     /**
     * Sets the height off all elements to be the same as the tallest one.
+    * @returns void
     */
-    heightEqualize() {
+    heightEqualize(): void {
         let tallest: number = 0;
         for (const item of this.items as any) {
             if (item.offsetHeight > tallest) {
@@ -63,8 +49,9 @@ class S {
     * Styles element
     * @param property The CSS property to set
     * @param value The value to assign to the property
+    * @returns void
     */
-    css(property: string, value: string) {
+    css(property: string, value: string): void {
         for (const item of this.items as any) {
             item.style[property] = value;
         }
@@ -75,23 +62,35 @@ class S {
     * @param property The CSS property to set
     * @param value The value to assign to the property
     * @param duration The value to assign to the property
-    *
-    * @todo Revert to original transition duration when finished
+    * @returns void
     */
-    animate(property: string, value: string, duration: string) {
-        this.css('transitionDuration', duration + 'ms');
-        this.css(property, value);
+    animate(property: string, value: string, duration: string): void {
+        for (const item of this.items as any) {
+            item.style.originalTransitionDuration = item.style.transitionDuration;
+            item.style.transitionDuration = duration + 'ms';
+            item.style[property] = value;
+            setTimeout(() => {
+                item.style.transitionDuration = item.style.originalTransitionDuration;
+            }, parseInt(duration));
+        }
     }
 
     /**
-    * Changes text of elements
+    * Gets or sets text of elements
     * @param Text The text to give selected element
+    * @returns string | undefined
     */
-    text(newText: string): string | undefined {
-        if(newText) {
-            this.items[0].innerHTML = newText;
+    text(newText?: string): string | undefined {
+        if (newText) {
+            for (const item of this.items as any) {
+                item.innerHTML = newText;
+            }
         } else {
-            return this.items[0].innerHTML;
+            let textToReturn: string = '';
+            for (const item of this.items as any) {
+                textToReturn += item.innerHTML;
+            }
+            return textToReturn;
         }
     }
 
@@ -99,18 +98,21 @@ class S {
     * Adds event listener
     * @param event Which event to fire on
     * @param callback Function to run when event is fired
+    * @returns void
     */
-    on(event: string, callback: any) {
+    on(event: string, callback: void): void {
         for (const item of this.items as any) {
             item.addEventListener(event, callback);
         }
+        return;
     }
 
     /**
     * Adds class to element
     * @param className Name of class to add
+    * @returns void
     */
-    addClass(className: string) {
+    addClass(className: string): void {
         for (const item of this.items as any) {
             item.classList.add(className);
         }
@@ -119,8 +121,9 @@ class S {
     /**
     * Removes class to element
     * @param className Name of class to add
+    * @returns void
     */
-    removeClass(className: string) {
+    removeClass(className: string): void {
         for (const item of this.items as any) {
             item.classList.remove(className);
         }
@@ -129,10 +132,11 @@ class S {
     /**
     * Toggles class
     * @param className Name of class to toggle
+    * @returns void
     */
-    toggleClass(className: string) {
+    toggleClass(className: string): void {
         for (const item of this.items as any) {
-            if(item.classList.contains(className)) {
+            if (item.classList.contains(className)) {
                 item.classList.remove(className);
             } else {
                 item.classList.add(className);
@@ -141,17 +145,37 @@ class S {
     }
 
     /**
-    * Get or set attributes
-    * @param attributeName Name of the attribute
-    * @param value OPTIONAL Value to give attributeName
+    * Set href attribute
+    * @param url Href value
+    * @returns string | undefined
     */
-    attr(attributeName: string, value?: string) {
+    href(url: string): string | undefined {
+        let item: any = this.items[0];
+        if (url) {
+            item.href = url;
+        } else {
+            return item.href;
+        }
+    }
+
+    /**
+    * Hides element by setting display to none
+    * @returns void
+    */
+    hide(): void {
         for (const item of this.items as any) {
-            if(value) {
-                item.attributes[attributeName].nodeValue += ' ' + value;
-            } else {
-                return item.attributes[attributeName];
-            }
+            item.style.originalDisplay = item.style.display;
+            item.style.display = 'none';
+        }
+    }
+
+    /**
+    * Shows element by setting display to its orignal display value
+    * @returns void
+    */
+    show(): void {
+        for (const item of this.items as any) {
+            item.style.display = item.style.originalDisplay;
         }
     }
 }

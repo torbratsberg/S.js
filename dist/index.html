@@ -1,9 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>S.js</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"></head>
-  <body>
-  <script src="s.js"></script></body>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .box {
+            width: 30px;
+            height: 120px;
+            display: inline-block;
+            background: red;
+            transition-duration: 0.2s;
+        }
+
+        .box:last-of-type {
+            width: 120px;
+            height: 30px;
+            display: block;
+            background: blue;
+        }
+
+        .box:hover {
+            border: solid 3px black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>First</h1>
+    <h1>Second</h1>
+    <h1>Third</h1>
+    <div class="box"></div>
+    <div class="box"></div>
+    <script src="s.js"></script>
+</body>
+
 </html>

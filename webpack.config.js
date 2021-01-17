@@ -1,18 +1,31 @@
 var path = require('path');
 
+let babelOptions = {
+    "presets": [
+        "@babel/preset-typescript",
+        "minify",
+    ],
+}
+
 module.exports = {
     entry: './src/app.ts',
-    devtool: 'source-map',
-    mode: 'development',
+    devtool: 'inline-source-map',
+    mode: 'production',
     watch: true,
+    target: ['web', 'es5'],
 
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
+                test: /\.ts$/,
+                loader: 'babel-loader',
+                options: babelOptions,
+            },
+            {
+                test: /\.ts$/,
                 loader: 'ts-loader',
                 options: {
-                    configFile: "tsconfig.json"
+                    configFile: "tsconfig.json",
                 },
             },
         ],
