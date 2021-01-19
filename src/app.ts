@@ -8,7 +8,6 @@ class S {
     */
     items: NodeListOf<Element>;
 
-
     constructor(selector: string) {
         this.items = document.querySelectorAll(selector);
     }
@@ -178,9 +177,52 @@ class S {
             item.style.display = item.style.originalDisplay;
         }
     }
+
+    /**
+    * Slides elements up or down
+    * @param duration String of slide duration
+    * @returns void
+    * @todo Maybe use CSS class instead of JS
+    */
+    slideToggle(duration: string): void {
+        for (const item of this.items as any) {
+            if (!item.originalOffsetHeight) {
+                console.log('does not have OG offsetHeight');
+                // Store all original values
+                item.originalOffsetHeight = item.offsetHeight;
+                item.style.originalOverflowY = item.style.overflowY;
+                item.style.originalPadding = item.style.padding;
+                item.style.originalTransitionDuration = duration;
+                item.style.overflow = 'hidden';
+                item.style.transitionDuration = duration + 'ms';
+                if (item.offsetHeight == item.originalOffsetHeight) {
+                    console.log('slideup');
+                    item.style.height = '0px';
+                    item.style.padding = '0px';
+                } else {
+                    console.log('slidedown');
+                    item.style.height = '100%';
+                    item.style.padding = item.style.originalPadding;
+                }
+            } else {
+                console.log('does have OG offsetHeight');
+                item.style.overflow = 'hidden';
+                item.style.transitionDuration = duration + 'ms';
+                if (item.offsetHeight == item.originalOffsetHeight) {
+                    console.log('slideup');
+                    item.style.height = '0px';
+                    item.style.padding = '0px';
+                } else {
+                    console.log('slidedown');
+                    item.style.height = '100%';
+                    item.style.padding = item.style.originalPadding;
+                }
+            }
+        }
+    }
+
 }
 
 (window as any).s = (selector: string) => {
     return new S(selector);
 };
-

@@ -31,9 +31,21 @@
     <h1>First</h1>
     <h1>Second</h1>
     <h1>Third</h1>
+    
     <div class="box"></div>
     <div class="box"></div>
+
+    <button class="dropdownButton">Drop me down</button>
+    <p class="dropdownContent">hellow hfoiewr huoi hui hu ih hn uihnfgureeru jgreu gheur hnbgreh ugoerh guoerhn golurehn gouoerhn geohng oelurhng oe hgoue hnrgoi heroghe.<p>
+
     <script src="s.js"></script>
+    <script>
+
+        s('.dropdownButton').on('click', () => {
+            s('.dropdownContent').slideToggle(0);
+        });
+
+    </script>
 </body>
 
 </html>
