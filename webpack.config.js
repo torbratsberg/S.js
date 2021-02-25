@@ -1,11 +1,11 @@
 var path = require('path');
 
-let babelOptions = {
-    "presets": [
-        "@babel/preset-typescript",
-        "minify",
-    ],
-}
+// let babelOptions = {
+//     "presets": [
+//         "@babel/preset-typescript",
+//         "minify",
+//     ],
+// }
 
 module.exports = {
     entry: './src/app.ts',
@@ -16,11 +16,11 @@ module.exports = {
 
     module: {
         rules: [
-            {
-                test: /\.ts$/,
-                loader: 'babel-loader',
-                options: babelOptions,
-            },
+            // {
+            //     test: /\.ts$/,
+            //     loader: 'babel-loader',
+            //     options: babelOptions,
+            // },
             {
                 test: /\.ts$/,
                 loader: 'ts-loader',

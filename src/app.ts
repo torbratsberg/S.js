@@ -1,11 +1,11 @@
 /**
-* The S class
-* @param selector
-*/
+ * The S class
+ * @param selector
+ */
 class S {
     /**
-    * All matches from selector is stored in this property
-    */
+     * All matches from selector is stored in this property
+     */
     items: NodeListOf<Element>;
 
     constructor(selector: string) {
@@ -13,9 +13,9 @@ class S {
     }
 
     /**
-    * Sets the width off all elements to be the same as the widest one.
-    * @returns void
-    */
+     * Sets the width off all elements to be the same as the widest one.
+     * @returns void
+     */
     widthEqualize(): void {
         let widest = 0;
         for (const item of this.items as any) {
@@ -29,9 +29,9 @@ class S {
     }
 
     /**
-    * Sets the height off all elements to be the same as the tallest one.
-    * @returns void
-    */
+     * Sets the height off all elements to be the same as the tallest one.
+     * @returns void
+     */
     heightEqualize(): void {
         let tallest: number = 0;
         for (const item of this.items as any) {
@@ -45,11 +45,11 @@ class S {
     }
 
     /**
-    * Styles element
-    * @param property The CSS property to set
-    * @param value The value to assign to the property
-    * @returns void
-    */
+     * Styles element
+     * @param property The CSS property to set
+     * @param value The value to assign to the property
+     * @returns void
+     */
     css(property: string, value: string): void {
         for (const item of this.items as any) {
             item.style[property] = value;
@@ -57,12 +57,12 @@ class S {
     }
 
     /**
-    * Animates element
-    * @param property The CSS property to set
-    * @param value The value to assign to the property
-    * @param duration The value to assign to the property
-    * @returns void
-    */
+     * Animates element
+     * @param property The CSS property to set
+     * @param value The value to assign to the property
+     * @param duration The value to assign to the property
+     * @returns void
+     */
     animate(property: string, value: string, duration: string): void {
         for (const item of this.items as any) {
             item.style.originalTransitionDuration = item.style.transitionDuration;
@@ -75,10 +75,10 @@ class S {
     }
 
     /**
-    * Gets or sets text of elements
-    * @param Text The text to give selected element
-    * @returns string | undefined
-    */
+     * Gets or sets text of elements
+     * @param Text The text to give selected element
+     * @returns string | undefined
+     */
     text(newText?: string): string | undefined {
         if (newText) {
             for (const item of this.items as any) {
@@ -94,11 +94,11 @@ class S {
     }
 
     /**
-    * Adds event listener
-    * @param event Which event to fire on
-    * @param callback Function to run when event is fired
-    * @returns void
-    */
+     * Adds event listener
+     * @param event Which event to fire on
+     * @param callback Function to run when event is fired
+     * @returns void
+     */
     on(event: string, callback: void): void {
         for (const item of this.items as any) {
             item.addEventListener(event, callback);
@@ -107,10 +107,10 @@ class S {
     }
 
     /**
-    * Adds class to element
-    * @param className Name of class to add
-    * @returns void
-    */
+     * Adds class to element
+     * @param className Name of class to add
+     * @returns void
+     */
     addClass(className: string): void {
         for (const item of this.items as any) {
             item.classList.add(className);
@@ -118,10 +118,10 @@ class S {
     }
 
     /**
-    * Removes class to element
-    * @param className Name of class to add
-    * @returns void
-    */
+     * Removes class to element
+     * @param className Name of class to add
+     * @returns void
+     */
     removeClass(className: string): void {
         for (const item of this.items as any) {
             item.classList.remove(className);
@@ -129,10 +129,10 @@ class S {
     }
 
     /**
-    * Toggles class
-    * @param className Name of class to toggle
-    * @returns void
-    */
+     * Toggles class
+     * @param className Name of class to toggle
+     * @returns void
+     */
     toggleClass(className: string): void {
         for (const item of this.items as any) {
             if (item.classList.contains(className)) {
@@ -144,10 +144,10 @@ class S {
     }
 
     /**
-    * Set href attribute
-    * @param url Href value
-    * @returns string | undefined
-    */
+     * Set href attribute
+     * @param url Href value
+     * @returns string | undefined
+     */
     href(url: string): string | undefined {
         let item: any = this.items[0];
         if (url) {
@@ -158,9 +158,9 @@ class S {
     }
 
     /**
-    * Hides element by setting display to none
-    * @returns void
-    */
+     * Hides element by setting display to none
+     * @returns void
+     */
     hide(): void {
         for (const item of this.items as any) {
             item.style.originalDisplay = item.style.display;
@@ -169,54 +169,15 @@ class S {
     }
 
     /**
-    * Shows element by setting display to its orignal display value
-    * @returns void
-    */
+     * Shows element by setting display to its orignal display value
+     * @returns void
+     */
     show(): void {
         for (const item of this.items as any) {
-            item.style.display = item.style.originalDisplay;
-        }
-    }
-
-    /**
-    * Slides elements up or down
-    * @param duration String of slide duration
-    * @returns void
-    * @todo Maybe use CSS class instead of JS
-    */
-    slideToggle(duration: string): void {
-        for (const item of this.items as any) {
-            if (!item.originalOffsetHeight) {
-                console.log('does not have OG offsetHeight');
-                // Store all original values
-                item.originalOffsetHeight = item.offsetHeight;
-                item.style.originalOverflowY = item.style.overflowY;
-                item.style.originalPadding = item.style.padding;
-                item.style.originalTransitionDuration = duration;
-                item.style.overflow = 'hidden';
-                item.style.transitionDuration = duration + 'ms';
-                if (item.offsetHeight == item.originalOffsetHeight) {
-                    console.log('slideup');
-                    item.style.height = '0px';
-                    item.style.padding = '0px';
-                } else {
-                    console.log('slidedown');
-                    item.style.height = '100%';
-                    item.style.padding = item.style.originalPadding;
-                }
+            if (item.style.originalDisplay) {
+                item.style.display = item.style.originalDisplay;
             } else {
-                console.log('does have OG offsetHeight');
-                item.style.overflow = 'hidden';
-                item.style.transitionDuration = duration + 'ms';
-                if (item.offsetHeight == item.originalOffsetHeight) {
-                    console.log('slideup');
-                    item.style.height = '0px';
-                    item.style.padding = '0px';
-                } else {
-                    console.log('slidedown');
-                    item.style.height = '100%';
-                    item.style.padding = item.style.originalPadding;
-                }
+                item.style.display = 'block';
             }
         }
     }
@@ -226,3 +187,5 @@ class S {
 (window as any).s = (selector: string) => {
     return new S(selector);
 };
+
+console.log(window);
